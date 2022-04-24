@@ -4,6 +4,8 @@
 //
 //import java.util.Scanner;
 //
+//
+// // foreach lowerCase, uppserCase 이론
 //public class string2 {
 //    public String solution(String str) {
 //        String answer="";
