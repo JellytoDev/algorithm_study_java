@@ -5,29 +5,45 @@ import java.util.*;
 /*
 설명
 
-한 개의 문자열 s와 문자 t가 주어지면 문자열 s의 각 문자가 문자 t와 떨어진 최소거리를 출력하는 프로그램을 작성하세요.
+알파벳 대문자로 이루어진 문자열을 입력받아 같은 문자가 연속으로 반복되는 경우 반복되는
+
+문자 바로 오른쪽에 반복 횟수를 표기하는 방법으로 문자열을 압축하는 프로그램을 작성하시오.
+
+단 반복횟수가 1인 경우 생략합니다.
 
 
 입력
-첫 번째 줄에 문자열 s와 문자 t가 주어진다. 문자열과 문자는 소문자로만 주어집니다.
-
-문자열의 길이는 100을 넘지 않는다.
+첫 줄에 문자열이 주어진다. 문자열의 길이는 100을 넘지 않는다.
 
 
 출력
-첫 번째 줄에 각 문자열 s의 각 문자가 문자 t와 떨어진 거리를 순서대로 출력한다.
+첫 줄에 압축된 문자열을 출력한다.
 
 
 예시 입력 1
-teachermode e
+KKHSSSSSSSE
 
 예시 출력 1
-1 0 1 2 1 0 1 2 2 1 0
+K2HS7E
+
+예시 입력 2
+KSTTTSEEKFKKKDJJGG
+
+예시 출력 2
+KST3SE2KFK3DJ2G2
 */
-// List 초기화 system.out.print, system.out.println 차이
+// substring과 Integer.paseInt(2진수, 10진수 변환) replace, nextLine으로 입력받으면 정상적으로 안됨 등
+// 문자열 나눠야 하는 경우 for문 말고 replace로 해야함
 public class Main {
-    public String solution(String str) {
+    public String solution(int num,String str) {
         String answer = "";
+
+        for (int i = 0; i < num; i++) {
+            String tmp = str.substring(0,7).replace('#','1').replace('*','0');
+            int answerNum = Integer.parseInt(tmp, 2);
+            answer += (char) answerNum;
+            str = str.substring(7);
+        }
 
         return answer;
     }
@@ -35,7 +51,9 @@ public class Main {
     public static void main(String[] args) {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
-        String str = kb.nextLine();
-        System.out.println(T.solution(str));
+        int num = kb.nextInt();
+        String str = kb.next();
+
+        System.out.println(T.solution(num,str));
     }
 }
