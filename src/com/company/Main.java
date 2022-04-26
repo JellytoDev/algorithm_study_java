@@ -3,47 +3,45 @@ package com.company;
 import java.util.*;
 
 /*
+5. 소수(에라토스테네스 체)
 설명
 
-알파벳 대문자로 이루어진 문자열을 입력받아 같은 문자가 연속으로 반복되는 경우 반복되는
+자연수 N이 입력되면 1부터 N까지의 소수의 개수를 출력하는 프로그램을 작성하세요.
 
-문자 바로 오른쪽에 반복 횟수를 표기하는 방법으로 문자열을 압축하는 프로그램을 작성하시오.
-
-단 반복횟수가 1인 경우 생략합니다.
+만약 20이 입력되면 1부터 20까지의 소수는 2, 3, 5, 7, 11, 13, 17, 19로 총 8개입니다.
 
 
 입력
-첫 줄에 문자열이 주어진다. 문자열의 길이는 100을 넘지 않는다.
+첫 줄에 자연수의 개수 N(2<=N<=200,000)이 주어집니다.
 
 
 출력
-첫 줄에 압축된 문자열을 출력한다.
+첫 줄에 소수의 개수를 출력합니다.
 
 
 예시 입력 1
-KKHSSSSSSSE
+20
 
 예시 출력 1
-K2HS7E
+8
 
-예시 입력 2
-KSTTTSEEKFKKKDJJGG
-
-예시 출력 2
-KST3SE2KFK3DJ2G2
 */
-// substring과 Integer.paseInt(2진수, 10진수 변환) replace, nextLine으로 입력받으면 정상적으로 안됨 등
-// 문자열 나눠야 하는 경우 for문 말고 replace로 해야함
+// 피보나치 수열
 public class Main {
-    public String solution(int num,String str) {
-        String answer = "";
+    public Integer solution(int num) {
+        Integer answer= 0;
 
-        for (int i = 0; i < num; i++) {
-            String tmp = str.substring(0,7).replace('#','1').replace('*','0');
-            int answerNum = Integer.parseInt(tmp, 2);
-            answer += (char) answerNum;
-            str = str.substring(7);
-        }
+        //Loop1 :
+        //for (int i = 2; i < num; i++) {
+        //    int cnt =0;
+        //    for (int j = 1; j <= i; j++) {
+        //        if(i%j==0) cnt++;
+        //        if(cnt>2) continue Loop1;
+        //    }
+        //    answer++;
+        //}
+
+
 
         return answer;
     }
@@ -52,8 +50,11 @@ public class Main {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
         int num = kb.nextInt();
-        String str = kb.next();
 
-        System.out.println(T.solution(num,str));
+        //ArrayList<Integer> solution = T.solution(num);
+        //for (Integer x : solution) {
+        //    System.out.print(x+" ");
+        //}
+        System.out.println(T.solution(num));
     }
 }
