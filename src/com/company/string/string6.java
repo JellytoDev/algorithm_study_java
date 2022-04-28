@@ -18,7 +18,7 @@
 //출력
 //첫 줄에 중복문자가 제거된 문자열을 출력합니다.*/
 
-// // index 개념
+// // index 개념, indexOf 함수는 맨처음 발견한 것을 발견하기에 중복을 제거하는데 유용하다.
 //public class string6 {
 //    public String solution(String str) {
 //        String answer = "";

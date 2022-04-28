@@ -27,7 +27,7 @@
 //예시 출력 1
 //YES
 //*/
-//// 정규 표현식으로 알파벳만 추려내기, StringBuilder 개념
+//// 정규 표현식으로 알파벳만 추려내기, StringBuilder 개념, equal 함수
 //public class string8 {
 //    public String solution(String str) {
 //        String answer = "NO";

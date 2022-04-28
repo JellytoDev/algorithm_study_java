@@ -31,22 +31,11 @@ public class Main {
     public Integer solution(int num) {
         Integer answer= 0;
 
-        //Loop1 :
-        //for (int i = 2; i < num; i++) {
-        //    int cnt =0;
-        //    for (int j = 1; j <= i; j++) {
-        //        if(i%j==0) cnt++;
-        //        if(cnt>2) continue Loop1;
-        //    }
-        //    answer++;
-        //}
-
-
-
         return answer;
     }
 
     public static void main(String[] args) {
+
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
         int num = kb.nextInt();
@@ -56,5 +45,14 @@ public class Main {
         //    System.out.print(x+" ");
         //}
         System.out.println(T.solution(num));
+    }
+
+    private static void characterMethodTest() {
+        char ch1 ='3';
+        char ch2 = 'h';
+        char ch3 = ' ';
+        if(Character.isDigit(ch1)) System.out.println("is digit");
+        if(Character.isAlphabetic(ch2)) System.out.println("is alpha");
+        if(Character.isWhitespace(ch3)) System.out.println("is space");
     }
 }
