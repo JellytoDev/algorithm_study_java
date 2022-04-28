@@ -1,47 +1,66 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /*
-5. 소수(에라토스테네스 체)
+9. 격자판 최대합
 설명
 
-자연수 N이 입력되면 1부터 N까지의 소수의 개수를 출력하는 프로그램을 작성하세요.
+5*5 격자판에 아래롸 같이 숫자가 적혀있습니다.
 
-만약 20이 입력되면 1부터 20까지의 소수는 2, 3, 5, 7, 11, 13, 17, 19로 총 8개입니다.
+Image1.jpg
+
+N*N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선의 합 중 가 장 큰 합을 출력합니다.
 
 
 입력
-첫 줄에 자연수의 개수 N(2<=N<=200,000)이 주어집니다.
+첫 줄에 자연수 N이 주어진다.(2<=N<=50)
+
+두 번째 줄부터 N줄에 걸쳐 각 줄에 N개의 자연수가 주어진다. 각 자연수는 100을 넘지 않는다.
 
 
 출력
-첫 줄에 소수의 개수를 출력합니다.
+최대합을 출력합니다.
 
 
 예시 입력 1
-20
 
+5
+10 13 10 12 15
+12 39 30 23 11
+11 25 50 53 15
+19 27 29 37 27
+19 13 30 13 19
 예시 출력 1
-8
+
+155
 
 */
-// 피보나치 수열
+// 배열채우기
 public class Main {
-    public Integer solution(int num) {
-        Integer answer= 0;
 
-        //Loop1 :
-        //for (int i = 2; i < num; i++) {
-        //    int cnt =0;
-        //    for (int j = 1; j <= i; j++) {
-        //        if(i%j==0) cnt++;
-        //        if(cnt>2) continue Loop1;
-        //    }
-        //    answer++;
-        //}
+    public int solution(int num, int[][] arr) {
+        //int answer = 0;
+        int answer = Integer.MIN_VALUE;
+        for (int i = 0; i < num; i++) {
+            int sum_hor = 0; int sum_ver = 0;
+            for (int j = 0; j < num; j++) {
+                sum_hor += arr[i][j];
+                sum_ver += arr[j][i];
+            }
+            //if(sum_hor > answer) answer = sum_hor;
+            //if(sum_ver > answer) answer = sum_ver;
+            answer = Math.max(answer, sum_hor);
+            answer = Math.max(answer, sum_ver);
 
+        }
 
+        int sum_dig = 0;
+        for (int i = 0; i < num; i++) {
+            sum_dig += arr[i][i];
+        }
+        if(sum_dig > answer) answer = sum_dig;
 
         return answer;
     }
@@ -50,11 +69,18 @@ public class Main {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
         int num = kb.nextInt();
+        int[][] arr = new int[num][num];
 
-        //ArrayList<Integer> solution = T.solution(num);
+        for (int i = 0; i < num; i++) {
+            for (int j = 0; j < num; j++) {
+                arr[i][j] = kb.nextInt();
+            }
+        }
+
+        //int solution = T.solution(num,arr);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
-        System.out.println(T.solution(num));
+        System.out.println(T.solution(num,arr));
     }
 }
