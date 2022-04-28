@@ -5,7 +5,7 @@
 //import java.util.Scanner;
 //
 
-// lt rt 개념
+// lt rt 개념, Character.isAlphabetic 함수
 //public class string5 {
 //    public String solution(String str) {
 //        String answer = new String();

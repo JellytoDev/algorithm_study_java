@@ -34,7 +34,7 @@
 //예시 출력 2
 //KST3SE2KFK3DJ2G2
 //*/
-//// substring과 Integer.paseInt(2진수, 10진수 변환) replace, nextLine으로 입력받으면 정상적으로 안됨 등
+//// 고정된 숫자로 끊어야 할 때 substring과 Integer.paseInt(2진수, 10진수 변환) replace, nextLine으로 입력받으면 정상적으로 안됨 등
 //// 문자열 나눠야 하는 경우 for문 말고 replace로 해야함
 //public class string12 {
 //    public String solution(int num,String str) {

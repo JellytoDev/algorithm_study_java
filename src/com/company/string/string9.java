@@ -28,7 +28,7 @@
 //208
 //
 //*/
-//// 숫자 유니코드 값, isDight 숫자 검출 방법, 앞에 숫자 0 없애는 방법
+//// 숫자 유니코드 값, isDight 숫자 검출 방법, 앞에 숫자 0 없애는 방법 = 문자열이면 Integer.valueOf로 바꾸면 됨,
 //public class string9 {
 //    public Integer solution(String str) {
 //        String answer = "";

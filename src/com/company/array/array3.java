@@ -30,7 +30,7 @@
 //7 9 6 12
 //
 //*/
-//// else 통합하기, 코드 계속 줄여가기, 승/패밖에 없는 상황 else로 나눠내기
+//// else 통합하기, 코드 계속 줄여가기, 승/패밖에 없는 상황 else로 나눠내기, 무조건 경우의 수에 대한 답이 정해져 있을
 //public class array3 {
 //    public ArrayList<String> solution(int num, int[] arr, int[] arr2) {
 //        ArrayList<String> answer= new ArrayList<>();
