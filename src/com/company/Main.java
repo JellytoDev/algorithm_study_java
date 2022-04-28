@@ -31,17 +31,7 @@ public class Main {
     public Integer solution(int num) {
         Integer answer= 0;
 
-        //Loop1 :
-        //for (int i = 2; i < num; i++) {
-        //    int cnt =0;
-        //    for (int j = 1; j <= i; j++) {
-        //        if(i%j==0) cnt++;
-        //        if(cnt>2) continue Loop1;
-        //    }
-        //    answer++;
-        //}
-
-
+        System.out.println("answer = " + answer);
 
         return answer;
     }
