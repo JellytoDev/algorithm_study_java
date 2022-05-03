@@ -3,111 +3,109 @@ package com.company;
 import java.util.*;
 
 /*
-11. 임시반장 정하기
+6. 최대 길이 연속부분수열
 설명
 
-김갑동 선생님은 올해 6학년 1반 담임을 맡게 되었다.
+0과 1로 구성된 길이가 N인 수열이 주어집니다. 여러분은 이 수열에서 최대 k번을 0을 1로 변경할 수 있습니다. 여러분이 최대 k번의 변경을 통해 이 수열에서 1로만 구성된 최대 길이의 연속부분수열을 찾는 프로그램을 작성하세요.
 
-김갑동 선생님은 우선 임시로 반장을 정하고 학생들이 서로 친숙해진 후에 정식으로 선거를 통해 반장을 선출하려고 한다.
+만약 길이가 길이가 14인 다음과 같은 수열이 주어지고 k=2라면
 
-그는 자기반 학생 중에서 1학년부터 5학년까지 지내오면서 한번이라도 같은 반이었던 사람이 가장 많은 학생을 임시 반장으로 정하려 한다.
+1 1 0 0 1 1 0 1 1 0 1 1 0 1
 
-그래서 김갑동 선생님은 각 학생들이 1학년부터 5학년까지 몇 반에 속했었는지를 나타내는 표를 만들었다.
-
-예를 들어 학생 수가 5명일 때의 표를 살펴보자.
+여러분이 만들 수 있는 1이 연속된 연속부분수열은
 
 Image1.jpg
 
-위 경우에 4번 학생을 보면 3번 학생과 2학년 때 같은 반이었고, 3번 학생 및 5번 학생과 3학년 때 같은 반이었으며,
-
-2번 학생과는 4학년 때 같은 반이었음을 알 수 있다. 그러므로 이 학급에서 4번 학생과 한번이라도
-
-같은 반이었던 사람은 2번 학생, 3번 학생과 5번 학생으로 모두 3명이다.
-
-이 예에서 4번 학생이 전체 학생 중에서 같은 반이었던 학생 수가 제일 많으므로 임시 반장이 된다.
-
-각 학생들이 1학년부터 5학년까지 속했던 반이 주어질 때, 임시 반장을 정하는 프로그램을 작성하시오.
+이며 그 길이는 8입니다.
 
 
 입력
-첫째 줄에는 반의 학생 수를 나타내는 정수가 주어진다. 학생 수는 3 이상 1000 이하이다.
+첫 번째 줄에 수열의 길이인 자연수 N(5<=N<100,000)이 주어집니다.
 
-둘째 줄부터는 1번 학생부터 차례대로 각 줄마다 1학년부터 5학년까지 몇 반에 속했었는지를 나타내는 5개의 정수가 빈칸 하나를 사이에 두고 주어진다.
-
-주어지는 정수는 모두 1 이상 9 이하의 정수이다.
+두 번째 줄에 N길이의 0과 1로 구성된 수열이 주어집니다.
 
 
 출력
-첫 줄에 임시 반장으로 정해진 학생의 번호를 출력한다.
-
-단, 임시 반장이 될 수 있는 학생이 여러 명인 경우에는 그 중 가장 작은 번호만 출력한다.
+첫 줄에 최대 길이를 출력하세요.
 
 
 예시 입력 1
-5
-2 3 1 7 3
-4 1 9 6 8
-5 5 2 4 4
-6 5 2 6 7
-8 4 2 2 2
+14 2
+1 1 0 0 1 1 0 1 1 0 1 1 0 1
 
 예시 출력 1
-4
-힌트
-출처 : 한국정보올림피아드
+8
 
 */
-// for문 세로 형식으로 돌아야 함. i번과 j번 이중으로 돌면서 k 학년까지 같은지
-// 값이 무엇인지 정확히 파악한다 (해당같은 경우 j가 등수이고 값이 학생 번호이다.
-// 두개를 비교하는 경우 rankI와 rankJ를 구분하여 대입한다.
-// index 값을 실제 값과 매칭하는 버릇을 기른다.
+// 변수 모두 사용하기 (m 사용 안해서 틀렸음), 무조건 예시 고정적으로 코딩하지 말기
 public class Main {
-    public Integer solution(int studentNum,int testNum,int[][] grade) {
-        Integer answer= 0;
 
-        for (int i = 1; i <= studentNum; i++) {
-            for (int j = 1; j <= studentNum; j++) {
-                int passCnt = 0;
-                for (int k = 0; k < testNum; k++) {
-                    int rankI=0,rankJ = 0;
-                    for (int l = 0; l < studentNum; l++) {
-                        if(grade[k][l]==i) rankI = l;
-                        if(grade[k][l]==j) rankJ = l;
-                    }
-                    if(rankI < rankJ) passCnt++;
-                }
-                //System.out.println("passCnt = " + passCnt);
-                if(passCnt == testNum){
-                    //System.out.println(i+","+j+",");
-                    answer++;
-                }
+    // 14 2
+    // 1 1 0 0 1 1 0 1 1 0 1 1 0 1
+
+    public int solution2(int n, int m, int[] arr) {
+
+        int answer = 0;
+        int st=0,et=0;
+
+        while (st < n && et < n) {
+            //System.out.println("st = " + st +" " + et);
+            int change = 0;
+            int sum=0;
+            for (int i = st; i <=et; i++) {
+                if(arr[i]==0) change++;
+                sum++;
             }
+
+            //System.out.println("sum = " + sum +" " + change+" "+answer);
+
+            if(change>m){
+                // change 원상 복귀
+                while (change > m) {
+                    if(arr[st]==0) change--;
+                    st++;
+                }
+            }else{
+                // max 걸러내는 부분
+                if(sum > answer) answer = sum;
+                et++;
+            }
+
         }
 
-        //4,1
+
+        return answer;
+    }
+
+    public int solution(int n, int k, int[] arr){
+        int answer=0, cnt=0, lt=0;
+        for(int rt=0; rt<n; rt++){
+            if(arr[rt]==0) cnt++;
+            while(cnt>k){
+                if(arr[lt]==0) cnt--;
+                lt++;
+            }
+            answer=Math.max(answer, rt-lt+1);
+        }
         return answer;
     }
 
     public static void main(String[] args) {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
-        int studentNum = kb.nextInt();
-        int testNum = kb.nextInt();
 
-        int[][] grade = new int[testNum][studentNum];
+        int n = kb.nextInt();
+        int m = kb.nextInt();
+        int[] arr = new int[n];
 
-        for (int i = 0; i < testNum; i++) {
-            for (int j = 0; j < studentNum; j++) {
-                grade[i][j] = kb.nextInt();
-                //System.out.print(grade[i][j]+"");
-            }
-            //System.out.println("");
+        for (int i = 0; i < n; i++) {
+            arr[i] = kb.nextInt();
         }
 
-        //ArrayList<Integer> solution = T.solution(num);
+        //ArrayList<Integer> solution = T.solution(arr1_num,arr2_num,arr1,arr2);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
-        System.out.println(T.solution(studentNum,testNum,grade));
+        System.out.println(T.solution(n,m,arr));
     }
 }
