@@ -1,9 +1,11 @@
+///*
 //package com.company.array;
 //
 //import com.company.Main;
 //
 //import java.util.Scanner;
 //
+//*/
 ///*
 //11. 임시반장 정하기
 //설명
@@ -58,7 +60,8 @@
 //힌트
 //출처 : 한국정보올림피아드
 //
-//*/
+//*//*
+//
 //// for문 세로 형식으로 돌아야 함. i번과 j번 이중으로 돌면서 k 학년까지 같은지
 //// 같은 사람끼리 돌아야 하는 경우 행 중첩을 2번한다.
 //public class array11 {
@@ -106,3 +109,4 @@
 //        System.out.println(T.solution(num,arr));
 //    }
 //}
+//*/
