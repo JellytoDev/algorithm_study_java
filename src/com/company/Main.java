@@ -1,111 +1,70 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /*
-   8. 응급실
+10. 마구간 정하기(결정알고리즘)
 설명
 
-메디컬 병원 응급실에는 의사가 한 명밖에 없습니다.
+N개의 마구간이 수직선상에 있습니다. 각 마구간은 x1, x2, x3, ......, xN의 좌표를 가지며, 마구간간에 좌표가 중복되는 일은 없습니다.
 
-응급실은 환자가 도착한 순서대로 진료를 합니다. 하지만 위험도가 높은 환자는 빨리 응급조치를 의사가 해야 합니다.
+현수는 C마리의 말을 가지고 있는데, 이 말들은 서로 가까이 있는 것을 좋아하지 않습니다. 각 마구간에는 한 마리의 말만 넣을 수 있고,
 
-이런 문제를 보완하기 위해 응급실은 다음과 같은 방법으로 환자의 진료순서를 정합니다.
+가장 가까운 두 말의 거리가 최대가 되게 말을 마구간에 배치하고 싶습니다.
 
-• 환자가 접수한 순서대로의 목록에서 제일 앞에 있는 환자목록을 꺼냅니다.
-
-• 나머지 대기 목록에서 꺼낸 환자 보다 위험도가 높은 환자가 존재하면 대기목록 제일 뒤로 다시 넣습니다. 그렇지 않으면 진료를 받습니다.
-
-즉 대기목록에 자기 보다 위험도가 높은 환자가 없을 때 자신이 진료를 받는 구조입니다.
-
-현재 N명의 환자가 대기목록에 있습니다.
-
-N명의 대기목록 순서의 환자 위험도가 주어지면, 대기목록상의 M번째 환자는 몇 번째로 진료를 받는지 출력하는 프로그램을 작성하세요.
-
-대기목록상의 M번째는 대기목록의 제일 처음 환자를 0번째로 간주하여 표현한 것입니다.
+C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말의 거리가 최대가 되는 그 최대값을 출력하는 프로그램을 작성하세요.
 
 
 입력
-첫 줄에 자연수 N(5<=N<=100)과 M(0<=M<N) 주어집니다.
+첫 줄에 자연수 N(3<=N<=200,000)과 C(2<=C<=N)이 공백을 사이에 두고 주어집니다.
 
-두 번째 줄에 접수한 순서대로 환자의 위험도(50<=위험도<=100)가 주어집니다.
-
-위험도는 값이 높을 수록 더 위험하다는 뜻입니다. 같은 값의 위험도가 존재할 수 있습니다.
+둘째 줄에 마구간의 좌표 xi(0<=xi<=1,000,000,000)가 차례로 주어집니다.
 
 
 출력
-M번째 환자의 몇 번째로 진료받는지 출력하세요.
+첫 줄에 가장 가까운 두 말의 최대 거리를 출력하세요.
 
 
 예시 입력 1
-5 2
-60 50 70 80 90
+5 3
+1 2 8 4 9
 
 예시 출력 1
 3
-
-예시 입력 2
-6 3
-70 60 90 60 60 60
-
-예시 출력 2
-4
     */
-//
+// lt와 rt 사이에 답이 확실히 있다고 가정할 때 결정 알고리즘을 사용한다. (해당 범위 내에서 가능한 답이 명확히 있냐)
+// 결정 알고리즘은 이분검색을 통해 나온 값이 정답이 될 수 있는 가를 계속해서 판단한다.
+//int lt=Arrays.stream(arr).max().getAsInt();
+// int rt=Arrays.stream(arr).sum(); 꼭 기억
+// 좌표상 몇개를 배치할 수 있는가
+
 public class Main {
 
-    public int solution1(int n, int m, int[] arr) {
-        int answer = 0;
-
-        Queue<Integer> queue = new LinkedList<>();
-
-        int point = arr[m];
-
-        for (int i = 1; i <= n; i++) queue.offer(arr[i]);
-
-        while (!queue.isEmpty()) {
-            int tmp = queue.poll();
-            System.out.println("tmp = " + tmp);
-            if (queue.peek() > tmp) {
-                queue.offer(tmp);
-            } else {
-                answer++;
-                if(tmp == point) return answer;
+    public int count(int[] arr, int dist){
+        int cnt=1;
+        int ep=arr[0];
+        for(int i=1; i<arr.length; i++){
+            if(arr[i]-ep>=dist){
+                cnt++;
+                ep=arr[i];
             }
         }
-
-        return answer;
+        return cnt;
     }
 
-    class Person{
-        int id;
-        int priority;
-        public Person(int id, int priority){
-            this.id=id;
-            this.priority=priority;
-        }
-    }
-
-
-    public int solution(int n, int m, int[] arr){
+    public int solution(int n, int c, int[] arr){
         int answer=0;
-        Queue<Person> Q=new LinkedList<>();
-        for(int i=0; i<n; i++){
-            Q.offer(new Person(i, arr[i]));
-        }
-        while(!Q.isEmpty()){
-            Person tmp=Q.poll();
-            for(Person x : Q){
-                if(x.priority>tmp.priority){
-                    Q.offer(tmp);
-                    tmp=null;
-                    break;
-                }
+        Arrays.sort(arr);
+        int lt=1;
+        int rt=arr[n-1];
+        while(lt<=rt){
+            int mid=(lt+rt)/2;
+            if(count(arr, mid)>=c){
+                answer=mid;
+                lt=mid+1;
             }
-            if(tmp!=null){
-                answer++;
-                if(tmp.id==m) return answer;
-            }
+            else rt=mid-1;
         }
         return answer;
     }
@@ -118,16 +77,19 @@ public class Main {
         int n = kb.nextInt();
         int m = kb.nextInt();
 
-        int[] arr = new int[n+1];
+        int[] arr = new int[n];
 
         for (int i = 0; i < n; i++) {
             arr[i] = kb.nextInt();
         }
 
-        //ArrayList<Integer> solution = T.solution(n,m,arr);
+        //ArrayList<Integer> solution = T.solution(n,arr);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
+
         System.out.println(T.solution(n, m, arr));
+
+        //T.solution(n, pointers);
     }
 }
