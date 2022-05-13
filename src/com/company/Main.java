@@ -4,69 +4,67 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /*
-10. 마구간 정하기(결정알고리즘)
+1. 합이 같은 부분집합(DFS : 아마존 인터뷰)
 설명
 
-N개의 마구간이 수직선상에 있습니다. 각 마구간은 x1, x2, x3, ......, xN의 좌표를 가지며, 마구간간에 좌표가 중복되는 일은 없습니다.
+N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때
 
-현수는 C마리의 말을 가지고 있는데, 이 말들은 서로 가까이 있는 것을 좋아하지 않습니다. 각 마구간에는 한 마리의 말만 넣을 수 있고,
+두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 “YES"를 출력하고, 그렇지 않으면 ”NO"를 출력하는 프로그램을 작성하세요.
 
-가장 가까운 두 말의 거리가 최대가 되게 말을 마구간에 배치하고 싶습니다.
+둘로 나뉘는 두 부분집합은 서로소 집합이며, 두 부분집합을 합하면 입력으로 주어진 원래의 집합이 되어 합니다.
 
-C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말의 거리가 최대가 되는 그 최대값을 출력하는 프로그램을 작성하세요.
+예를 들어 {1, 3, 5, 6, 7, 10}이 입력되면 {1, 3, 5, 7} = {6, 10} 으로 두 부분집합의 합이 16으로 같은 경우가 존재하는 것을 알 수 있다.
 
 
 입력
-첫 줄에 자연수 N(3<=N<=200,000)과 C(2<=C<=N)이 공백을 사이에 두고 주어집니다.
+첫 번째 줄에 자연수 N(1<=N<=10)이 주어집니다.
 
-둘째 줄에 마구간의 좌표 xi(0<=xi<=1,000,000,000)가 차례로 주어집니다.
+두 번째 줄에 집합의 원소 N개가 주어진다. 각 원소는 중복되지 않는다.
 
 
 출력
-첫 줄에 가장 가까운 두 말의 최대 거리를 출력하세요.
+첫 번째 줄에 “YES" 또는 ”NO"를 출력한다.
 
 
 예시 입력 1
-5 3
-1 2 8 4 9
+6
+1 3 5 6 7 10
 
 예시 출력 1
-3
+YES
     */
-// lt와 rt 사이에 답이 확실히 있다고 가정할 때 결정 알고리즘을 사용한다. (해당 범위 내에서 가능한 답이 명확히 있냐)
-// 결정 알고리즘은 이분검색을 통해 나온 값이 정답이 될 수 있는 가를 계속해서 판단한다.
-//int lt=Arrays.stream(arr).max().getAsInt();
-// int rt=Arrays.stream(arr).sum(); 꼭 기억
-// 좌표상 몇개를 배치할 수 있는가
-
+// DFS는 반드시 if문과 else부로 나눠 재귀의 무한 반복을 막는다!!!!!
+// dfs는 재귀 함수 형태를 띄고 있다. 뻗어나가는 것을 생각하자.
 public class Main {
 
-    public int count(int[] arr, int dist){
-        int cnt=1;
-        int ep=arr[0];
-        for(int i=1; i<arr.length; i++){
-            if(arr[i]-ep>=dist){
-                cnt++;
-                ep=arr[i];
-            }
-        }
-        return cnt;
-    }
+    static String answer = "YES";
+    static int total,n;
+    static boolean flag = false;
 
-    public int solution(int n, int c, int[] arr){
-        int answer=0;
-        Arrays.sort(arr);
-        int lt=1;
-        int rt=arr[n-1];
-        while(lt<=rt){
-            int mid=(lt+rt)/2;
-            if(count(arr, mid)>=c){
-                answer=mid;
-                lt=mid+1;
+
+    //public String solution(int n,int[] arr){
+    //    String answer = "YES";
+    //    // 두개 부분집합 완성
+    //
+    //    // 두 부분집합의 합이 같냐?
+    //
+    //
+    //
+    //    return answer;
+    //}
+
+    public static void DFS(int L, int sum, int[] arr) {
+        if(flag) return;
+        if(sum>(total/2)) return;
+        if (L == n) {
+            if((total-sum) == sum){
+                answer = "YES";
+                flag = true;
             }
-            else rt=mid-1;
+        } else {
+            DFS(L + 1, sum + arr[L], arr);
+            DFS(L + 1, sum, arr);
         }
-        return answer;
     }
 
 
@@ -74,21 +72,25 @@ public class Main {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
 
-        int n = kb.nextInt();
-        int m = kb.nextInt();
+        n = kb.nextInt();
 
         int[] arr = new int[n];
 
+
         for (int i = 0; i < n; i++) {
             arr[i] = kb.nextInt();
+            total += arr[i];
         }
+
+        DFS(0, 0, arr);
+        System.out.println(answer);
 
         //ArrayList<Integer> solution = T.solution(n,arr);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
 
-        System.out.println(T.solution(n, m, arr));
+        //System.out.println(T.solution(n, arr));
 
         //T.solution(n, pointers);
     }
