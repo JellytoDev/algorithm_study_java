@@ -4,93 +4,82 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /*
-1. 합이 같은 부분집합(DFS : 아마존 인터뷰)
+8. 수열 추측하기
 설명
 
-N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때
+가장 윗줄에 1부터 N까지의 숫자가 한 개씩 적혀 있다. 그리고 둘째 줄부터 차례대로 파스칼의 삼각형처럼 위의 두개를 더한 값이 저장되게 된다.
 
-두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 “YES"를 출력하고, 그렇지 않으면 ”NO"를 출력하는 프로그램을 작성하세요.
+예를 들어 N이 4 이고 가장 윗 줄에 3 1 2 4 가 있다고 했을 때, 다음과 같은 삼각형이 그려진다.
 
-둘로 나뉘는 두 부분집합은 서로소 집합이며, 두 부분집합을 합하면 입력으로 주어진 원래의 집합이 되어 합니다.
+Image1.jpg
 
-예를 들어 {1, 3, 5, 6, 7, 10}이 입력되면 {1, 3, 5, 7} = {6, 10} 으로 두 부분집합의 합이 16으로 같은 경우가 존재하는 것을 알 수 있다.
+N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는 숫자를 구하는 프로그램을 작성하시오.
+
+단, 답이 여러가지가 나오는 경우에는 사전순으로 가장 앞에 오는 것을 출력하여야 한다.
 
 
 입력
-첫 번째 줄에 자연수 N(1<=N<=10)이 주어집니다.
+첫째 줄에 두개의 정수 N(1≤N≤10)과 F가 주어진다.
 
-두 번째 줄에 집합의 원소 N개가 주어진다. 각 원소는 중복되지 않는다.
+N은 가장 윗줄에 있는 숫자의 개수를 의미하며 F는 가장 밑에 줄에 있는 수로 1,000,000 이하이다.
 
 
 출력
-첫 번째 줄에 “YES" 또는 ”NO"를 출력한다.
+첫째 줄에 삼각형에서 가장 위에 들어갈 N개의 숫자를 빈 칸을 사이에 두고 출력한다.
+
+답이 존재하지 않는 경우는 입력으로 주어지지 않는다.
 
 
 예시 입력 1
-6
-1 3 5 6 7 10
+4 16
 
 예시 출력 1
-YES
+3 1 2 4
     */
-// DFS는 반드시 if문과 else부로 나눠 재귀의 무한 반복을 막는다!!!!!
-// dfs는 재귀 함수 형태를 띄고 있다. 뻗어나가는 것을 생각하자.
+// 콤비네이션 1 반환 조건 외우기
 public class Main {
 
-    static String answer = "YES";
-    static int total,n;
+    static int n;
+    static int m;
+    //static int k;
+    int[] arr;
+
     static boolean flag = false;
+    static int answer=Integer.MAX_VALUE;
+
+    // 5 3 -> 4 2 / 4 1 -> 3 1 / 3 2 -> 2 1/ 2 2 -> 1 1
+    //                  -> 3 0  / 3 1
+    public int DFS(int k,int r) {
+        //System.out.println("k = " + k +" "+r);
+    }
 
 
-    //public String solution(int n,int[] arr){
-    //    String answer = "YES";
-    //    // 두개 부분집합 완성
-    //
-    //    // 두 부분집합의 합이 같냐?
-    //
-    //
+    //private int solution(int n, int m, int[] arr) {
     //
     //    return answer;
     //}
-
-    public static void DFS(int L, int sum, int[] arr) {
-        if(flag) return;
-        if(sum>(total/2)) return;
-        if (L == n) {
-            if((total-sum) == sum){
-                answer = "YES";
-                flag = true;
-            }
-        } else {
-            DFS(L + 1, sum + arr[L], arr);
-            DFS(L + 1, sum, arr);
-        }
-    }
-
 
     public static void main(String[] args) {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
 
         n = kb.nextInt();
-
-        int[] arr = new int[n];
-
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = kb.nextInt();
-            total += arr[i];
-        }
-
-        DFS(0, 0, arr);
-        System.out.println(answer);
+        m = kb.nextInt();
 
         //ArrayList<Integer> solution = T.solution(n,arr);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
 
-        //System.out.println(T.solution(n, arr));
+        T.arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            T.arr[i] = i+1;
+        }
+
+        answer = T.DFS(0,0);
+
+        System.out.println(answer);
+        //System.out.println(T.solution(n, m, arr));
 
         //T.solution(n, pointers);
     }
