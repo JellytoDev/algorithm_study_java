@@ -36,51 +36,67 @@ N은 가장 윗줄에 있는 숫자의 개수를 의미하며 F는 가장 밑에
 예시 출력 1
 3 1 2 4
     */
-// 콤비네이션 1 반환 조건 외우기
+
 public class Main {
 
-    static int n;
-    static int m;
-    //static int k;
-    int[] arr;
-
-    static boolean flag = false;
-    static int answer=Integer.MAX_VALUE;
-
-    // 5 3 -> 4 2 / 4 1 -> 3 1 / 3 2 -> 2 1/ 2 2 -> 1 1
-    //                  -> 3 0  / 3 1
-    public int DFS(int k,int r) {
-        //System.out.println("k = " + k +" "+r);
-    }
-
-
-    //private int solution(int n, int m, int[] arr) {
-    //
-    //    return answer;
+    //public static class Vertex{
+    //    public int start;
+    //    public int
     //}
+
+
+    public int solution(int n, int start, int end, int[][] roads, int[] traps) {
+        int answer = 0;
+
+        ArrayList<Integer> existX = new ArrayList<>();
+        ArrayList<Integer> existY = new ArrayList<>();
+
+        int[][] check = new int[n + 1][n + 1];
+        int[] visited = new int[n+1];
+        for (int i = 0; i < roads.length; i++) {
+            check[roads[i][0]][roads[i][1]] = roads[i][2];
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(start);
+        visited[start] = 1;
+
+        while (!q.isEmpty()) {
+            int loc = q.poll();
+
+            for (int i = 0; i < check[loc].length; i++) {
+                int next = check[loc][i];
+                if (Arrays.asList(traps).contains(next)) {
+
+                }
+                if (visited[next] != 1) {
+                    q.offer(next);
+                    visited[next] = 1;
+                }
+                // trap 일 경우
+            }
+
+
+
+        }
+
+        return answer;
+    }
 
     public static void main(String[] args) {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
 
-        n = kb.nextInt();
-        m = kb.nextInt();
+        //String str = kb.nextLine();
+        int n = 3; int start = 1; int end = 3;
+        int[][] roads = {{1, 2, 2}, {3, 2, 3}};
+        int[] traps = {2};
 
         //ArrayList<Integer> solution = T.solution(n,arr);
         //for (Integer x : solution) {
         //    System.out.print(x+" ");
         //}
 
-        T.arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            T.arr[i] = i+1;
-        }
-
-        answer = T.DFS(0,0);
-
-        System.out.println(answer);
-        //System.out.println(T.solution(n, m, arr));
-
-        //T.solution(n, pointers);
+        System.out.println(T.solution(n,start,end,roads,traps));
     }
 }
