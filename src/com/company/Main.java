@@ -4,37 +4,66 @@ import java.util.*;
 
 public class Main {
 
-    public int solution(int[][] jobs) {
+    public static class Job implements Comparable<Job> {
+        int requestTime;
+        int workingTime;
+
+        public Job(int requestTime, int workingTime) {
+            this.requestTime = requestTime;
+            this.workingTime = workingTime;
+        }
+
+        @Override
+        public int compareTo(Job o) {
+            return this.requestTime - o.requestTime;
+        }
+    }
+
+    public static int solution(int[][] jobs) {
         int answer = 0;
-        int count = 0;// 처리된 디스크
-        int now = 0;//작업이 끝난시간
 
-        Arrays.sort(jobs, ((o1, o2) -> o1[0]-o2[0]));
+        PriorityQueue<Job> waiting = new PriorityQueue<>();
+        PriorityQueue<Job> pq = new PriorityQueue<>(new Comparator<Job>() {
+            @Override
+            public int compare(Job o1, Job o2) {
+                return o1.workingTime - o2.workingTime;
+            }
+        });
 
-        PriorityQueue<int[]> queue = new PriorityQueue<>(((o1, o2) -> o1[1] - o2[1]));
-        int i = 0;
-        while(count < jobs.length){
-            while (i< jobs.length && jobs[i][0] <= now){
-                queue.add(jobs[i++]);
+        for (int[] job : jobs) {
+            waiting.offer(new Job(job[0], job[1]));
+        }
+
+        int cnt = 0;
+        int time = 0;
+
+        while (cnt < jobs.length) {
+
+            while (!waiting.isEmpty() && waiting.peek().requestTime <= time) {
+                pq.offer(waiting.poll());
             }
 
-            if(queue.isEmpty()){
-                now = jobs[i][0];
+            if (!pq.isEmpty()) {
+                Job tmp = pq.poll();
+                time += tmp.workingTime;
+                answer += (time - tmp.requestTime);
+                cnt++;
             }else{
-                int[] tmp = queue.poll();
-                answer += tmp[1] + now - tmp[0];
-                now += tmp[1];
-                count++;
+                time++;
             }
         }
 
-        return answer/ jobs.length;
+
+        return answer / jobs.length;
+
     }
 
     public static void main(String[] args) {
         Main T = new Main();
         Scanner kb = new Scanner(System.in);
-        int[][] jobs = {{0,3},{1,9},{2,6}};
+
+        int[][] jobs = {{0, 3}, {1, 9}, {2, 6}};
+
         System.out.println(T.solution(jobs));
         //T.solution(n,number);
 
