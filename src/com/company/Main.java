@@ -5,29 +5,21 @@ import java.util.*;
 public class Main {
 
     public String solution(String number, int k) {
-        String answer = "";
+        int idx = 0;
+        char max;
+        StringBuilder answer = new StringBuilder();
 
-        char[] chars = number.toCharArray();
-        int len = k;
-
-        int max = Integer.MIN_VALUE;
-
-        for (int i = 0; i < chars.length; i++) {
-            int tmp = chars[i] - '0';
-            //System.out.println("len = " + len+" i : "+i);
-            if (i <= len && max < tmp) {
-                max = tmp;
+        if(number.charAt(0) == '0') return "0";
+        for(int i = 0; i < number.length() - k; i++) {
+            max = '0';
+            for(int j = idx; j <= k + i; j++) {
+                if(max < number.charAt(j)) {
+                    max = number.charAt(j); idx = j + 1;
+                }
             }
-
-            if (i >= len) {
-                //System.out.println("max = " + max);
-                answer += max;
-                len++;
-                max = Integer.MIN_VALUE;
-            }
+            answer.append(max);
         }
-
-        return answer;
+        return answer.toString();
     }
 
     public static void main(String[] args) {
